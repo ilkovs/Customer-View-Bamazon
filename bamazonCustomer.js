@@ -16,7 +16,6 @@ connection.connect(function(err) {
     console.log("\n--------------------------------------------------\n");
     // console.log("You are connected!");
 
-    itemsForSale();
 });
 
 
@@ -26,16 +25,18 @@ function itemsForSale() {
        "SELECT item_id, product_name, price FROM products",
        function(err, result) {
            if (err) throw err;
+
            console.log(result);
-       }
-    );
-}
+        }
+    )
+};
 
 //Promp the customer
 promptToPurchase();
 
 //create the Prompt Function
 function promptToPurchase() {
+    itemsForSale();
 inquirer
     .prompt([
         {
@@ -97,6 +98,7 @@ inquirer
         })
     })
 }
+
 
 
 
