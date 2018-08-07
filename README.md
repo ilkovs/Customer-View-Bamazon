@@ -19,4 +19,4 @@ To run the customer interface please follow the steps below:
 	npm install mysql; npm install inquirer
 	node bamazonCustomer.js
   
-  The **View Products for Sale** option allows you to view the current inventory of store items: item IDs, department in which the item is located, price, and the quantity available in stock.
+  The **Items for Sale** option allows you to view the current inventory of store items: item IDs, department in which the item is located, price, and the quantity available in stock.
