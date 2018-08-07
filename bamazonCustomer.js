@@ -59,7 +59,7 @@ inquirer
         var checkDB = "SELECT * FROM products WHERE ?";
 
         connection.query(checkDB, {item_id: customerItem}, function(err, data) {
-
+            console.log(data[0]);
             if (err) throw err;
 
             //specify item from 1-10
@@ -72,14 +72,24 @@ inquirer
                 var productData = data[0];
 
                 // the requested quantity should be below the one available in the inventory
-                if (quantity <= productData.quantity) {
+                if (quantity <= productData.stock_quantity) {
                     
                     console.log("The item is in stock. Processing your order!");
 
                     // update the invetory after the order, subtract the ordered quantity from the inventory 
-                    var updateInventory = "UPDATE products SET quantity = " + (productData.quantity - quantity) + "WHERE item_id " + item;
-
-                    connection.query(updateInventory, function(err, data) {
+                    // var updateInventory = "UPDATE products SET stock_quantity = " + (productData.stock_quantity - quantity) + "WHERE item_id= " + customerItem;
+                    
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                          {
+                            stock_quantity: productData.stock_quantity - quantity
+                          },
+                          {
+                            item_id: customerItem
+                          }
+                        ], 
+                        function(err, data) {
                         if (err) throw err;
 
                         console.log("Your order has been received! Your total is $" + productData.price * quantity);
